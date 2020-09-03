@@ -131,12 +131,13 @@ export class MainPage extends React.Component<
 	}
 
 	private stateHelper(): MainPageStateFromStore {
+		const image = selectionState.getImage();
 		return {
 			isFlashing: flashState.isFlashing(),
 			hasImage: selectionState.hasImage(),
 			hasDrive: selectionState.hasDrive(),
-			imageLogo: selectionState.getImageLogo(),
-			imageSize: selectionState.getImageSize(),
+			imageLogo: image?.logo,
+			imageSize: image?.size,
 			imageName: getImageBasename(selectionState.getImage()),
 			driveTitle: getDrivesTitle(),
 			driveLabel: getDriveListLabel(),
@@ -309,7 +310,7 @@ export class MainPage extends React.Component<
 								icon={<QuestionCircleSvg height="1em" fill="currentColor" />}
 								onClick={() =>
 									openExternal(
-										selectionState.getImageSupportUrl() ||
+										selectionState.getImage()?.supportUrl ||
 											'https://github.com/balena-io/etcher/blob/master/SUPPORT.md',
 									)
 								}
